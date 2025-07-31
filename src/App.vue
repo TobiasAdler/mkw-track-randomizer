@@ -3,14 +3,14 @@
         <h1 class="text-2xl font-bold mb-4">Mario Kart Strecken-Auswahl</h1>
 
         <div v-if="!isRunning" class="mb-4">
-            <label for="count">Anzahl Strecken (1–32):</label>
+            <label for="count" class="block mb-1">Anzahl Strecken: {{ trackCount }}</label>
             <input
                 id="count"
-                type="number"
+                type="range"
                 v-model.number="trackCount"
                 min="1"
-                max="32"
-                class="border p-1 ml-2 w-16"
+                max="30"
+                class="w-full"
             />
             <button @click="startRound" class="ml-2 bg-blue-500 text-white px-3 py-1 rounded">
                 Start
@@ -21,6 +21,7 @@
             <div class="mb-4">
                 <p class="text-lg">Strecke {{ currentIndex + 1 }} von {{ trackCount }}</p>
                 <p class="font-semibold text-xl my-2">{{ currentTrack }}</p>
+                <img :src="getImagePath(currentTrack)" :alt="currentTrack" class="rounded shadow-md max-w-full h-auto"/>
             </div>
 
             <button
@@ -39,17 +40,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 const allTracks = [
-    "Luigi Circuit", "Moo Moo Meadows", "Mushroom Gorge", "Toad's Factory",
-    "Mario Circuit", "Coconut Mall", "DK Summit", "Wario's Gold Mine",
-    "Daisy Circuit", "Koopa Cape", "Maple Treeway", "Grumble Volcano",
-    "Dry Dry Ruins", "Moonview Highway", "Bowser's Castle", "Rainbow Road",
-    "GCN Peach Beach", "DS Yoshi Falls", "SNES Ghost Valley 2", "N64 Mario Raceway",
-    "N64 Sherbet Land", "GBA Shy Guy Beach", "DS Delfino Square", "GCN Waluigi Stadium",
-    "DS Desert Hills", "GBA Bowser Castle 3", "N64 DK's Jungle Parkway", "GCN Mario Circuit",
-    "SNES Mario Circuit 3", "DS Peach Gardens", "GCN DK Mountain", "N64 Bowser's Castle"
+    "Baumwipfelpfad", "Fliegende Festung (DS)", "Kino Buu Huu", "Bowsers Festung",
+    "Cheep-Cheep-Kaskaden", "Schoko-Sumpf (N64)", "Kronen-Metropole", "Pusteblumen-Grotte",
+    "Glühheiße Wüste (DS)", "Dinodino-Dschungel (GNC)", "DK Alpin (DS)", "DK-Startrampe",
+    "Knochentrocken-Vulkan", "Wildtierpark", "?-Block-Ruinen", "Koopa-Strand (SNES)",
+    "Mario Bros.-Piste", "Marios Piste (SNES)", "Kuhmuh-Weide (Wii)", "Peach Beach (GNC)",
+    "Peach-Stadion", "Regenbogen Boulevard", "Salzwasser-Serpentinen", "Shy Guys Basar (3DS)",
+    "Eiscreme-Eskapade (Tour)", "Aurora-Ausblick", "Toads Fabrik (Wii)", "Wario-Arena (N64)",
+    "Warios Galeonenwrack (3DS)", "Dampflok-Gipfel"
 ]
 
 const trackCount = ref(5)
@@ -75,6 +76,20 @@ function nextTrack() {
         currentIndex.value++
         currentTrack.value = selectedTracks.value[currentIndex.value]
     }
+}
+
+function getImagePath(trackName) {
+    // Beispiel Umwandlung: alles klein, Leerzeichen + Sonderzeichen zu Unterstrich
+    const fileName = trackName
+        // .toLowerCase()
+        // .replace(/\s+/g, '_')            // Leerzeichen zu _
+        .replace(/[ä]/g, 'ae')           // Umlaute anpassen
+        .replace(/[ö]/g, 'oe')
+        .replace(/[ü]/g, 'ue')
+        .replace(/[ß]/g, 'ss')
+        .replace(/[^\w_()\- .]/g, '_')       // Sonderzeichen entfernen, außer _ ( ) -
+        // .replace(/[()]/g, '')            // Klammern entfernen
+    return `images/${fileName}.png`
 }
 
 function endRound() {

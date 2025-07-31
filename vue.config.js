@@ -1,5 +1,5 @@
 const {defineConfig} = require('@vue/cli-service')
 module.exports = defineConfig({
-    publicPath: process.env.NODE_ENV === "production" ? "/skylander-randomizer/" : "/",
+    publicPath: process.env.NODE_ENV === "production" ? "/mkw-track-randomizer/" : "/",
     transpileDependencies: true
 })
