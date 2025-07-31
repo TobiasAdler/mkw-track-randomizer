@@ -1,40 +1,47 @@
 <template>
-    <div class="p-6 max-w-md mx-auto">
-        <h1 class="text-2xl font-bold mb-4">Mario Kart Strecken-Auswahl</h1>
+    <div id="app">
+        <div class="p-6 max-w-md mx-auto">
+            <h1 class="text-2xl font-bold mb-4">Mario Kart Strecken-Auswahl</h1>
 
-        <div v-if="!isRunning" class="mb-4">
-            <label for="count" class="block mb-1">Anzahl Strecken: {{ trackCount }}</label>
-            <input
-                id="count"
-                type="range"
-                v-model.number="trackCount"
-                min="1"
-                max="30"
-                class="w-full"
-            />
-            <button @click="startRound" class="ml-2 bg-blue-500 text-white px-3 py-1 rounded">
-                Start
-            </button>
-        </div>
-
-        <div v-else>
-            <div class="mb-4">
-                <p class="text-lg">Strecke {{ currentIndex + 1 }} von {{ trackCount }}</p>
-                <p class="font-semibold text-xl my-2">{{ currentTrack }}</p>
-                <img :src="getImagePath(currentTrack)" :alt="currentTrack" class="rounded shadow-md max-w-full h-auto"/>
+            <div v-if="!isRunning" class="mb-4">
+                <div>
+                    <label for="count" class="block mb-1">Anzahl Strecken: {{ trackCount }}</label>
+                </div>
+                <input
+                    id="count"
+                    type="range"
+                    v-model.number="trackCount"
+                    min="1"
+                    max="30"
+                    class="w-full"
+                />
+                <div>
+                    <button @click="startRound" class="ml-2 bg-blue-500 text-white px-3 py-1 rounded">
+                        Start
+                    </button>
+                </div>
             </div>
 
-            <button
-                @click="nextTrack"
-                class="bg-green-500 text-white px-3 py-1 rounded mr-2"
-                :disabled="currentIndex >= trackCount - 1"
-            >
-                Weiter
-            </button>
+            <div v-else>
+                <div class="mb-4">
+                    <p class="text-lg">Strecke {{ currentIndex + 1 }} von {{ trackCount }}:</p>
+                    <p class="font-semibold text-xl my-2">{{ currentTrack }}</p>
+                    <img :src="getImagePath(currentTrack)" :alt="currentTrack"
+                         class="rounded shadow-md max-w-full h-auto"/>
+                </div>
 
-            <button @click="endRound" class="bg-red-500 text-white px-3 py-1 rounded">
-                Beenden
-            </button>
+                <button
+                    @click="nextTrack"
+                    class="bg-green-500 text-white px-3 py-1 rounded mr-2"
+                    :disabled="currentIndex >= trackCount - 1"
+                >
+                    Weiter
+                </button>
+
+                <button @click="endRound" class="bg-red-500 text-white px-3 py-1 rounded">
+                    Beenden
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -88,7 +95,7 @@ function getImagePath(trackName) {
         .replace(/[ü]/g, 'ue')
         .replace(/[ß]/g, 'ss')
         .replace(/[^\w_()\- .]/g, '_')       // Sonderzeichen entfernen, außer _ ( ) -
-        // .replace(/[()]/g, '')            // Klammern entfernen
+    // .replace(/[()]/g, '')            // Klammern entfernen
     return `images/${fileName}.png`
 }
 
@@ -100,8 +107,66 @@ function endRound() {
 }
 </script>
 
-<style scoped>
+<style>
 body {
+    background-color: var(--bg-color);
+}
+
+#app {
     font-family: Arial, sans-serif;
+    color: var(--text-color);
+    text-align: center;
+    margin: 20px;
+}
+
+button {
+    background-color: var(--element-bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 18px;
+    margin: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: var(--element-hover-bg-color);
+    border-color: var(--element-hover-border-color);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button:disabled {
+    background-color: #ddd;
+    color: #888;
+    border-color: #ccc;
+    cursor: default;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+button:disabled:hover {
+    background-color: #ddd;
+    border-color: #ccc;
+}
+
+input[type=range] {
+    background: var(--element-bg-color);
+    margin: 1rem;
+}
+
+:root {
+    --bg-color: #1c1c1c;
+    --border-color: #555;
+    --element-bg-color: #121212;
+    --text-color: #f5f5f5;
+    --element-hover-border-color: #f5f5f5;
+    --element-hover-bg-color: #2a2a2a;
+    --checkbox-check: #dce4ea;
 }
 </style>
