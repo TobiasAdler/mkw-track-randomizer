@@ -1,8 +1,10 @@
 <template>
     <div id="app">
         <div class="p-6 max-w-md mx-auto">
-            <h1 class="text-2xl font-bold mb-4">Mario Kart Strecken-Auswahl</h1>
-
+            <img :src="`images/Mario_Kart_World_Logo.png`" :alt="`Mario Kart World`"
+                 class="rounded shadow-md"
+                 style="max-width: 100%; height: auto; width: 500px;"/>
+            <div style="height: 30px"></div>
             <div v-if="!isRunning" class="mb-4">
                 <div>
                     <label for="count" class="block mb-1">Anzahl Strecken: {{ trackCount }}</label>
@@ -14,7 +16,9 @@
                     min="1"
                     max="30"
                     class="w-full"
+                    style="max-width: 80%; height: auto; width: 300px;"
                 />
+                <div style="height: 50px"></div>
                 <div>
                     <button @click="startRound" class="ml-2 bg-blue-500 text-white px-3 py-1 rounded">
                         Start
@@ -27,7 +31,8 @@
                     <p class="text-lg">Strecke {{ currentIndex + 1 }} von {{ trackCount }}:</p>
                     <p class="font-semibold text-xl my-2">{{ currentTrack }}</p>
                     <img :src="getImagePath(currentTrack)" :alt="currentTrack"
-                         class="rounded shadow-md max-w-full h-auto"/>
+                         class="rounded shadow-md max-w-full h-auto"
+                         style="max-width: 100%; height: auto; width: 500px;"/>
                 </div>
 
                 <button
@@ -86,16 +91,12 @@ function nextTrack() {
 }
 
 function getImagePath(trackName) {
-    // Beispiel Umwandlung: alles klein, Leerzeichen + Sonderzeichen zu Unterstrich
     const fileName = trackName
-        // .toLowerCase()
-        // .replace(/\s+/g, '_')            // Leerzeichen zu _
-        .replace(/[ä]/g, 'ae')           // Umlaute anpassen
+        .replace(/[ä]/g, 'ae')
         .replace(/[ö]/g, 'oe')
         .replace(/[ü]/g, 'ue')
         .replace(/[ß]/g, 'ss')
-        .replace(/[^\w_()\- .]/g, '_')       // Sonderzeichen entfernen, außer _ ( ) -
-    // .replace(/[()]/g, '')            // Klammern entfernen
+        .replace(/[^\w_()\- .]/g, '_')
     return `images/${fileName}.png`
 }
 
