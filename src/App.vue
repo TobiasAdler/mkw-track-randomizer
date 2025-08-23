@@ -32,7 +32,7 @@
                     <p class="text-lg">{{ t('track') }} {{ currentIndex + 1 }} {{ t('of') }} {{ trackCount }}:</p>
                     <p class="font-semibold text-xl my-2">{{ currentTrackName }}</p>
                     <img
-                        :src="`/images/${currentTrack.id}.png`"
+                        :src="`images/${currentTrack.id}.png`"
                         :alt="currentTrack.id"
                         class="rounded shadow-md max-w-full h-auto"
                         style="max-width: 100%; height: auto; width: 500px;"
