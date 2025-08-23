@@ -1,4 +1,5 @@
 <template>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <div id="app">
         <div class="p-6 max-w-md mx-auto">
             <img :src="`images/mario_kart_world_logo.png`" :alt="`Mario Kart World`"
